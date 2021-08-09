@@ -1,0 +1,5 @@
+bs4==0.0.1
+arxiv==1.4.1
+googletrans==4.0.0rc1
+requests==2.25.1
+jsonschema==3.2.0

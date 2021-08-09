@@ -27,19 +27,22 @@ def sendQueryToSlack(post_info):
 def main():
     # TODO : check response
     paper_iterater = sendQuetyToArXiv()
+    num_of_papers = len(paper_iterater)
+    print(f'found f{num_of_papers} papers')
     tr = Translator()
     # TODO : define MAX_NUM_OF_PAPERS
     for paper in paper_iterater:
+        print(f'> {paper.title}')
         # TODO : check response
         summary_ja = tr.translate(text=paper.summary.replace('\n',''), src="en", dest="ja").text
-        # TODO : check response
         post_info = {
             'url':paper.pdf_url,
             'title':paper.title,
             'summary':summary_ja,
             'first_author':str(paper.authors[0])
         }
+        # TODO : check response
         response = sendQueryToSlack(post_info)
-
+        
 if __name__=='__main__':
     main()

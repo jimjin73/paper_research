@@ -27,4 +27,4 @@ jobs:
         env:
             SLACK_TOKEN_PAPER_RESEARCH: ${{secrets.SLACK_TOKEN_PAPER_RESEARCH}}
         run: |
-          python src/main.py
+          python src/main.py $SLACK_TOKEN_PAPER_RESEARCH

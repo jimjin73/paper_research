@@ -1,6 +1,6 @@
 from googletrans import Translator
 import arxiv
-import os
+import sys
 import requests
 import datetime
 
@@ -14,17 +14,16 @@ def sendQuetyToArXiv():
     )
     return search.results()
 
-def sendQueryToSlack(post_info):
-    token = os.environ['SLACK_TOKEN_PAPER_RESEARCH'] # read an environment variable
+def sendQueryToSlack(TOKEN, post_info):
     channel_name = 'announce' # included in post_info?
     message = post_info['title'] + '\n' +\
               post_info['first_author'] + ' et al.\n' +\
               post_info['url'] + '\n```' +\
               post_info['summary'] + '```'
     return requests.post('https://slack.com/api/chat.postMessage',\
-                        data={'token': token, 'channel': channel_name, 'text':message})
+                        data={'token': TOKEN, 'channel': channel_name, 'text':message})
 
-def main():
+def main(argv):
     MAX_NUM_OF_PAPERS = 5
     # TODO : check response
     paper_iterater = sendQuetyToArXiv()
@@ -44,7 +43,7 @@ def main():
             'first_author':str(paper.authors[0])
         }
         # TODO : check response
-        response = sendQueryToSlack(post_info)
+        response = sendQueryToSlack(argv[1], post_info)
         
 if __name__=='__main__':
-    main()
+    main(sys.argv)

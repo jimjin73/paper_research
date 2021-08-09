@@ -25,13 +25,15 @@ def sendQueryToSlack(post_info):
                         data={'token': token, 'channel': channel_name, 'text':message})
 
 def main():
+    MAX_NUM_OF_PAPERS = 5
     # TODO : check response
     paper_iterater = sendQuetyToArXiv()
-    num_of_papers = len(paper_iterater)
-    print(f'found f{num_of_papers} papers')
     tr = Translator()
     # TODO : define MAX_NUM_OF_PAPERS
-    for paper in paper_iterater:
+    for i, paper in enumerate(paper_iterater):
+        if i >= MAX_NUM_OF_PAPERS:
+            print(f'There are more than {MAX_NUM_OF_PAPERS} new papers.')
+            break
         print(f'> {paper.title}')
         # TODO : check response
         summary_ja = tr.translate(text=paper.summary.replace('\n',''), src="en", dest="ja").text

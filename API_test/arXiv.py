@@ -12,7 +12,7 @@ search = arxiv.Search(query ='(cat:cs.AI OR cat:cs.LG OR cat.cs.CR OR cat.cs.DC)
 paper = next(search.results())
 
 print(paper.title)
-print(paper.authors)
+print(paper.authors[0])
 print(paper.pdf_url)
 print(paper.summary)
 
